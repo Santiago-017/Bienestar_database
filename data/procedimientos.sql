@@ -70,6 +70,33 @@ DELIMITER ;
 grant execute on PROCEDURE contarElementos to "administrador";
 grant execute on PROCEDURE contarElementos to "estudiante";
 
+drop procedure if exists datosGrupo;
+Delimiter //
+create procedure datosGrupo()
+Begin
+select grupoId,Nombre_grupo, Disciplina, Requerimiento_Tecnico, Nombre_convocatoria from vw_convocatoriaPorGAI;
+End //
+Delimiter ;
+grant execute on PROCEDURE datosGrupo to "estudiante";
+
+drop procedure if exists datosCursos;
+Delimiter //
+create procedure datosCursos()
+Begin
+select Nombre, Horario, categoria, cucHorario from vw_cursosculturales;
+End //
+Delimiter ;
+grant execute on PROCEDURE datosCursos to "estudiante";
+
+drop procedure if exists convocatorias;
+Delimiter //
+create procedure convocatorias()
+Begin
+select convId, convNombre, FechaApertura, FechaCierre from vw_convocatoriascultura;
+End //
+Delimiter ;
+grant execute on PROCEDURE convocatorias to "estudiante";
+
 #--------------------------------------------------------------------------------------------------------
 #                  Tomás
 #--------------------------------------------------------------------------------------------------------
