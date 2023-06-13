@@ -52,9 +52,36 @@ create view vw_childAna as select perId as IdInfante,perNombre as Nombre, perApe
 #----------------------------------------------------------------------
 #                       Sebastián
 #----------------------------------------------------------------------
+# -- Vistas --
+DROP VIEW IF EXISTS vw_actividadesdisponiblesAI;
+DROP VIEW IF EXISTS vw_gruposproyectosest;
+DROP VIEW IF EXISTS vw_convocatoria_PC;
+DROP VIEW IF EXISTS vw_convocatorias_aplicadas;
+DROP VIEW IF EXISTS vw_asesorias_usuario;
+DROP VIEW IF EXISTS vw_asesorias_Disponibles;
+
 #Vista de los eventos disponibles
- create view vw_actividadesdisponiblesAI as select actNombre, actFecha, actLugar, actDescripcion from actividadai where actFecha >= CURDATE();
+create view vw_actividadesdisponiblesAI as select actNombre, actFecha, actLugar, actDescripcion from actividadai where actFecha >= CURDATE();
  
- #Vista de los grupos de proyectos estudiantiles
- create view vw_gruposproyectosest as select gpNombre as grupo, gpLineadeAccion as linea_de_accion, peNombre as nombre_proyecto, peDescripcion as descripcion_proyecto from grupoproyectoestudiantil join proyectoestudiantil on (grupoproyectoestudiantil.proyectoID=proyectoestudiantil.peID);
+#Vista de los grupos de proyectos estudiantiles
+create view vw_gruposproyectosest as select peNombre as nombre_proyecto, peDescripcion as descripcion_proyecto, gpNombre as grupo, gpLineadeAccion as linea_de_accion from grupoproyectoestudiantil join proyectoestudiantil on (grupoproyectoestudiantil.proyectoID=proyectoestudiantil.peID);
+
+#Vista de las convocatorias de Promotores de Convivencia
+create view vw_convocatoria_PC as select conv_id, convNombre, convFechaApertura, convFechaCierre, pcEstimuloEconomico, pcHorasRequeridas, pcDuracionVinculacion, pcDescripcion, pcPostulados, pcCuposTotales from convocatoria JOIN convocatoriapromotorconvivencia ON (conv_id=convID) where convFechaCierre>=CURDATE();
+
+#Vista de las convocatorias a la que ha aplicado el usuario
+create view vw_convocatorias_aplicadas as select perID, CONCAT(perNombre, " ", perApellido) as nombre, perEmail, perFacultad, convocatoria.conv_id, convNombre, datos_est.fecha from convocatoria join (select * from persona join estudiante_toma_convocatoria on(perID=idEst)) as datos_est ON(convocatoria.conv_id=datos_est.conv_id);
+
+#Vista de las asesorias tomadas por el usuario
+create view vw_asesorias_usuario as select asID, EstudianteID, asTipo, asArea, asFecha, asLugar, CONCAT(perNombre, " ", perApellido) as asesor, perEmail, progNombre from programa join (select * from asesoria join persona on(AsesorID=perID)) as as_info ON(progID=ProgramaID);
+
+#Vista de las asesorias disponibles
+create view vw_asesorias_Disponibles as select asTipo, asArea, asDID, asFecha, asLugar, CONCAT(perNombre, " ", perApellido) as asesor, perEmail, progNombre from programa join (select * from asesoriaDisponible join persona on(AsesorID=perID)) as as_info ON(progID=ProgramaID);
+
+GRANT SELECT ON vw_actividadesdisponiblesAI TO "estudiante";
+GRANT SELECT ON vw_gruposproyectosest TO "estudiante";
+GRANT SELECT, UPDATE ON vw_convocatoria_PC TO "estudiante";
+GRANT ALL ON vw_convocatorias_aplicadas TO "estudiante";
+GRANT ALL ON vw_asesorias_usuario TO "estudiante";
+GRANT ALL ON vw_asesorias_Disponibles TO "estudiante";
  
