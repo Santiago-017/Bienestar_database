@@ -1,0 +1,45 @@
+#----------------------------------------------------------------------
+#                   Santiago 
+#----------------------------------------------------------------------
+DROP TRIGGER IF EXISTS validar_cupos;
+DROP TRIGGER IF EXISTS validar_cadena_no_vacia;
+DROP TRIGGER IF EXISTS validar_fecha_futura;
+
+#Este trigger puede ser util para verificar que haya cupos disponibles en los cursos culturales
+DELIMITER //
+CREATE TRIGGER validar_cupos
+BEFORE INSERT ON cursocultural
+FOR EACH ROW
+BEGIN
+    IF NEW.cucCupoMaximo < 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Ya no quedan cupos para este curso cultural.';
+    END IF;
+END //
+DELIMITER ;
+
+#Este trigger puede ser util para validar que no se ingrese un valor vacio
+DELIMITER //
+CREATE TRIGGER validar_cadena_no_vacia
+BEFORE INSERT ON grupoartisticoinstitucional
+FOR EACH ROW
+BEGIN
+    IF NEW.gaiNombre = '' THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El valor no puede estar vacío.';
+    END IF;
+END //
+DELIMITER ;
+
+#Este trigger puede ser util para validar que la convocatoria que se quiere ingresar no este vencida
+DELIMITER //
+CREATE TRIGGER validar_fecha_futura
+BEFORE INSERT ON convocatoria
+FOR EACH ROW
+BEGIN
+    IF NEW.convFechaApertura <= CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'La fecha debe ser en el futuro.';
+    END IF;
+END //
+DELIMITER ;
