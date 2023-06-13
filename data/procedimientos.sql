@@ -19,7 +19,7 @@ BEGIN
     WHERE convFechaCierre < fecha_actual;
 END //
 DELIMITER ;
-grant execute on PROCEDURE actualizarEstadoConvocatoria to "administrador";
+grant execute on PROCEDURE actualizarEstadoConvocatoria to "estudiante";
 
 #El siguiente proceso elimina el programa de Grupo Artistico institucional y todas las convocatorias relacionadas.
 #Este proceso puede ser util para hacer modificaciones a todo el programa sin perder la información de los grupos artisticos
@@ -38,7 +38,7 @@ BEGIN
     
 END //
 DELIMITER ;
-grant execute on PROCEDURE eliminarProgramaGAI to "administrador";
+grant execute on PROCEDURE eliminarProgramaGAI to "estudiante";
 
 #El siguiente procedimiento muestra la convocatoria que se repete más veces, lo cual puede ser interesante para un estudiante que busca entrar a un programa de manera más segura
 drop procedure if exists contarElementos;
@@ -67,7 +67,6 @@ BEGIN
 END //
 
 DELIMITER ;
-grant execute on PROCEDURE contarElementos to "administrador";
 grant execute on PROCEDURE contarElementos to "estudiante";
 
 drop procedure if exists datosGrupo;
@@ -226,9 +225,9 @@ SET DEFAULT ROLE ALL TO '1'@'localhost';
 #----------------------------------------------------------
 #            Sebastian
 #---------------------------------------------------------
-DROP FUNCTION IF EXISTS	fc_cantParticipantes;
+
 DROP PROCEDURE IF EXISTS sp_fecharangoActAI;
-DROP PROCEDURE IF EXISTS pa_fecharangoAsesoria
+DROP PROCEDURE IF EXISTS pa_fecharangoAsesoria;
 DROP PROCEDURE IF EXISTS sp_actividades_disponiblesAI;
 DROP PROCEDURE IF EXISTS sp_proyectos_estudiantiles;
 DROP PROCEDURE IF EXISTS sp_convocatorias_disponiblesPC;
@@ -241,8 +240,8 @@ DROP PROCEDURE IF EXISTS sp_cancelarAsesoria;
 DROP PROCEDURE IF EXISTS sp_agendarAsesoria;
 
 #La siguiente función retorna el número de participantes de alguna actividad
+DROP FUNCTION IF EXISTS	fc_cantParticipantes;
 DELIMITER $$
-
 CREATE FUNCTION fc_cantParticipantes(actID INT)  RETURNS INT READS SQL DATA DETERMINISTIC
 BEGIN
 	DECLARE participantes INT;
@@ -250,7 +249,6 @@ BEGIN
 	
     RETURN participantes;
 END $$
-
 DELIMITER ;
 
 #El siguiente procedimiento muestra las actividades que se realizaron (o realizarán) en un intervalo de fechas
@@ -269,7 +267,7 @@ BEGIN
 	SELECT * FROM asesoria where asFecha >= fecha_min AND asFecha <= fecha_max;
 END $$
 DELIMITER ;
-grant execute on PROCEDURE pa_fecharangoAsesoria to "administrador";
+
 
 #Consultar actividades disponibles
 DELIMITER $$
