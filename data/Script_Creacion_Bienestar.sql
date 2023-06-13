@@ -841,6 +841,7 @@ DROP TABLE IF EXISTS Bienestar.Estudiante_Toma_Convocatoria ;
 CREATE TABLE IF NOT EXISTS Bienestar.Estudiante_Toma_Convocatoria (
   idEst INT UNSIGNED NOT NULL,
   conv_id INT NOT NULL,
+  fecha DATETIME NULL,
   PRIMARY KEY (idEst, conv_id),
   CONSTRAINT fk_Estudiante_copy1_has_Convocatoria_Estudiante_copy11
     FOREIGN KEY (idEst)
@@ -1314,7 +1315,7 @@ CREATE INDEX `fk_ActividadAI_has_Estudiante_ActividadAI1_idx` ON `Bienestar`.`Pa
 DROP TABLE IF EXISTS `Bienestar`.`Asesoria` ;
 
 CREATE TABLE IF NOT EXISTS `Bienestar`.`Asesoria` (
-  `asID` INT NOT NULL,
+  `asID` INT NOT NULL AUTO_INCREMENT,
   `asTipo` MEDIUMTEXT NOT NULL,
   `asArea` VARCHAR(45) NOT NULL,
   `asFecha` DATETIME NOT NULL,
@@ -1345,6 +1346,37 @@ CREATE INDEX `fk_Asesoria_Programa1_idx` ON `Bienestar`.`Asesoria` (`ProgramaID`
 CREATE INDEX `fk_Asesoria_Estudiante1_idx` ON `Bienestar`.`Asesoria` (`EstudianteID` ASC) VISIBLE;
 
 CREATE INDEX `fk_Asesoria_Persona1_idx` ON `Bienestar`.`Asesoria` (`AsesorID` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `Bienestar`.`AsesoriaDisponible`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Bienestar`.`AsesoriaDisponible` ;
+
+CREATE TABLE IF NOT EXISTS `Bienestar`.`AsesoriaDisponible` (
+  `asDID` INT NOT NULL auto_increment,
+  `asTipo` MEDIUMTEXT NOT NULL,
+  `asArea` VARCHAR(45) NOT NULL,
+  `asFecha` DATETIME NOT NULL,
+  `asLugar` VARCHAR(45) NOT NULL,
+  `ProgramaID` INT UNSIGNED NOT NULL,
+  `AsesorID` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`asDID`, `ProgramaID`, `AsesorID`),
+  CONSTRAINT `fk_AsesoriaDisponible_Programa1`
+    FOREIGN KEY (`ProgramaID`)
+    REFERENCES `Bienestar`.`Programa` (`progID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_AsesoriaDisponible_Persona1`
+    FOREIGN KEY (`AsesorID`)
+    REFERENCES `Bienestar`.`Persona` (`perID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_AsesoriaDisponible_Programa1_idx` ON `Bienestar`.`AsesoriaDisponible` (`ProgramaID` ASC) VISIBLE;
+
+CREATE INDEX `fk_AsesoriaDisponible_Persona1_idx` ON `Bienestar`.`AsesoriaDisponible` (`AsesorID` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -1434,6 +1466,9 @@ CREATE INDEX `fk_ApoyoGP_GrupoProyectoEstudiantil1_idx` ON `Bienestar`.`ApoyoGP`
 -- -----------------------------------------------------
 -- Table `Bienestar`.`ConvocatoriaPromotorConvivencia`
 -- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table `Bienestar`.`ConvocatoriaPromotorConvivencia`
+-- -----------------------------------------------------
 DROP TABLE IF EXISTS `Bienestar`.`ConvocatoriaPromotorConvivencia` ;
 
 CREATE TABLE IF NOT EXISTS `Bienestar`.`ConvocatoriaPromotorConvivencia` (
@@ -1441,7 +1476,8 @@ CREATE TABLE IF NOT EXISTS `Bienestar`.`ConvocatoriaPromotorConvivencia` (
   `pcEstimuloEconomico` INT NOT NULL,
   `pcHorasRequeridas` TINYINT NOT NULL,
   `pcDuracionVinculacion` VARCHAR(45) NOT NULL,
-  `pcCupos` TINYINT NOT NULL,
+  `pcPostulados` TINYINT NOT NULL,
+  `pcCuposTotales` TINYINT NOT NULL,
   `pcDescripcion` LONGTEXT NOT NULL,
   PRIMARY KEY (`convID`),
   CONSTRAINT `fk_ConvocatoriaPromotorConvivencia_Convocatoria1`

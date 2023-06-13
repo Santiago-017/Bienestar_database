@@ -348,26 +348,26 @@ insert into convocatoriagestionalojamiento values (13,'KR 172 m No. 98-27','Chap
 insert into convocatoriagestionalojamiento values (14,'TV 156 k No. 30-17','Fontibón',1948563.0,'Residencia Universitaria','N.A',3897126);
 insert into convocatoriagestionalojamiento values (15,'TV 20 q No. 42-58','Ciudad Bolívar',2479522.0,'Vivienda familiar','N.A',4959044);
 
-insert into estudiante_toma_convocatoria values (30,9);
-insert into estudiante_toma_convocatoria values (16,1);
-insert into estudiante_toma_convocatoria values (22,2);
-insert into estudiante_toma_convocatoria values (26,14);
-insert into estudiante_toma_convocatoria values (24,3);
-insert into estudiante_toma_convocatoria values (27,8);
-insert into estudiante_toma_convocatoria values (2,8);
-insert into estudiante_toma_convocatoria values (14,3);
-insert into estudiante_toma_convocatoria values (9,1);
-insert into estudiante_toma_convocatoria values (13,1);
-insert into estudiante_toma_convocatoria values (27,5);
-insert into estudiante_toma_convocatoria values (6,5);
-insert into estudiante_toma_convocatoria values (27,15);
-insert into estudiante_toma_convocatoria values (24,1);
-insert into estudiante_toma_convocatoria values (7,11);
-insert into estudiante_toma_convocatoria values (24,12);
-insert into estudiante_toma_convocatoria values (29,7);
-insert into estudiante_toma_convocatoria values (21,14);
-insert into estudiante_toma_convocatoria values (4,7);
-insert into estudiante_toma_convocatoria values (2,15);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (30,9);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (16,1);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (22,2);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (26,14);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (24,3);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (27,8);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (2,8);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (14,3);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (9,1);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (13,1);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (27,5);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (6,5);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (27,15);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (24,1);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (7,11);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (24,12);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (29,7);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (21,14);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (4,7);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (2,15);
 
 insert into fallaalimentacion (estID,fallAlcgaComida,fallAlLugar,fallAlFecha) values (23,'Almuerzo','Comedor central','2023-05-19');
 insert into fallaalimentacion (estID,fallAlcgaComida,fallAlLugar,fallAlFecha) values (9,'Desayuno','Ciencias Económicas','2023-02-12');
@@ -1612,8 +1612,8 @@ INSERT INTO Bienestar.ConvocatoriaSeleccion (Convocatoria_conv_id, convDeporte, 
 (218, 'Ciclismo', 'Anillo vial', '20:00:00'),
 (219, 'Atletismo', 'Polideportivo', '09:00:00');
 
-insert into estudiante_toma_convocatoria values (9,210);
-insert into estudiante_toma_convocatoria values (13,217);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (9,210);
+insert into estudiante_toma_convocatoria(idEst, conv_id) values (13,217);
 
 #------------------------------------------------------------------
 # Acompañamiento Integral
@@ -1720,10 +1720,27 @@ INSERT INTO asesoria(asID, asTipo, asArea, asFecha, asLugar, ProgramaID, Estudia
 (14, "Conformación de grupos y formulación de los proyectos", "Proyección social", "2023-02-20 13:30:00", "Salón 102", 10, 13, 92),
 (15, "Toma de decisiones en normas y trámites académico-administrativos", "Académica", "2023-03-05 11:00:00", "Salón 210", 8, 1, 59);
 
-INSERT INTO convocatoriapromotorconvivencia (convID, pcEstimuloEconomico, pcHorasRequeridas, pcDuracionVinculacion, pcCupos, pcDescripcion) VALUES
-(17, 580000, 7, "3 meses", 30, "Apoyar el desarrollo de herramientas virtuales, elaboración de piezas y estrategias comunicativas dirigidas a la comunidad."),
-(18, 580000, 5, "4 meses", 25, "Apoyar la planeación y ejecución de la Semana de Inducción."),
-(19, 580000, 8, "2 meses", 35, "Apoyar la planeación y ejecución de las actividades de los proyectos dirigidos a estudiantes de admisión especial: PAES, PEAMA y víctimas del conflicto armado.");
+INSERT INTO asesoriaDisponible(asTipo, asArea, asFecha, asLugar, ProgramaID, AsesorID) VALUES
+("Toma de decisiones en normas y trámites académico-administrativos", "Académica", "2023-06-16 10:30:00", "Sala de Estudio 1", 7, 73),
+("Crisis emocional o socioafectiva", "Familia", "2023-06-17 14:00:00", "Sala de Reuniones 2", 8, 54),
+("Habilidades académicas y sociales", "Bienestar", "2023-06-18 11:45:00", "Sala de Consejería 3", 6, 96),
+("Escuela de Padres", "Proyección Social", "2023-06-19 13:30:00", "Sala de Conferencias 4", 10, 82),
+("Tutorías", "Académica", "2023-06-20 09:15:00", "Biblioteca Central", 9, 67),
+("Acompañamiento y seguimiento especializado para poblaciones especiales", "Bienestar", "2023-06-21 15:45:00", "Centro de Asesoramiento 5", 6, 88),
+("Conformación de grupos y formulación de los proyectos", "Proyección Social", "2023-06-22 12:00:00", "Aula Magna", 7, 92),
+("Toma de decisiones en normas y trámites académico-administrativos", "Académica", "2023-06-23 14:30:00", "Sala de Estudio 2", 8, 78),
+("Habilidades académicas y sociales", "Familia", "2023-06-24 11:15:00", "Sala de Reuniones 3", 10, 68),
+("Escuela de Padres", "Proyección Social", "2023-06-25 13:45:00", "Sala de Conferencias 1", 9, 53),
+("Tutorías", "Bienestar", "2023-06-26 10:30:00", "Centro de Asesoramiento 2", 7, 87),
+("Acompañamiento y seguimiento especializado para poblaciones especiales", "Familia", "2023-06-27 15:00:00", "Sala de Consejería 4", 6, 75),
+("Conformación de grupos y formulación de los proyectos", "Proyección Social", "2023-06-28 11:45:00", "Aula Magna", 8, 94),
+("Toma de decisiones en normas y trámites académico-administrativos", "Académica", "2023-06-29 14:15:00", "Sala de Estudio 3", 10, 61),
+("Crisis emocional o socioafectiva", "Bienestar", "2023-06-30 13:00:00", "Centro de Asesoramiento 1", 9, 56);
+
+INSERT INTO convocatoriapromotorconvivencia (convID, pcEstimuloEconomico, pcHorasRequeridas, pcDuracionVinculacion, pcPostulados, pcCuposTotales, pcDescripcion) VALUES
+(17, 580000, 7, "3 meses", 0, 30, "Apoyar el desarrollo de herramientas virtuales, elaboración de piezas y estrategias comunicativas dirigidas a la comunidad."),
+(18, 580000, 5, "4 meses", 0, 25, "Apoyar la planeación y ejecución de la Semana de Inducción."),
+(19, 580000, 8, "2 meses", 0, 35, "Apoyar la planeación y ejecución de las actividades de los proyectos dirigidos a estudiantes de admisión especial: PAES, PEAMA y víctimas del conflicto armado.");
 
 INSERT INTO estudiante_toma_convocatoria (idEst, conv_id) VALUES
 (23, 17),
